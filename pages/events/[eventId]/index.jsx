@@ -13,7 +13,7 @@ const EventDetailPage = () => {
 
     useEffect(() => {
         const fetchWantedEvent = async () => {
-            const endpoint = `http://localhost:3000/api/events/${eventId}`;
+            const endpoint = `/api/events/${eventId}`;
             await fetch(endpoint)
                 .then((res) => {
                     if (!res.ok) throw new Error('Network response is not ok!');

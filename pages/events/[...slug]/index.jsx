@@ -39,7 +39,7 @@ const FilteredEventsPage = () => {
         }
 
         const fetchFilteredEvents = async () => {
-            const endpoint = `http://localhost:3000/api/filteredEvents/${filteredYear}-${filteredMonth}`;
+            const endpoint = `/api/filteredEvents/${filteredYear}-${filteredMonth}`;
             try {
                 const res = await fetch(endpoint);
                 if (!res.ok) {

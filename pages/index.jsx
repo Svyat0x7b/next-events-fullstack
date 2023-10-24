@@ -5,7 +5,7 @@ const HomePage = () => {
     const [featuredEvents, setFeaturedEvents] = useState([]);
     useEffect(() => {
         const fetchFeaturedEvents = async () => {
-            await fetch('http://localhost:3000/api/featuredEvents')
+            await fetch('/api/featuredEvents')
                 .then((res) => res.json())
                 .then((data) => setFeaturedEvents(data))
                 .catch((err) => console.log(err));

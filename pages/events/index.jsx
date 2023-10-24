@@ -16,7 +16,7 @@ const EventsPage = () => {
 
     useEffect(() => {
         const fetchAllEvents = async () => {
-            const endpoint = 'http://localhost:3000/api/events';
+            const endpoint = '/api/events';
             await fetch(endpoint)
                 .then((res) => {
                     if (!res.ok) {
