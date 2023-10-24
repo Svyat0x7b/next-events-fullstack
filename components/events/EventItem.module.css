@@ -1,0 +1,40 @@
+.listItem {
+    display: flex;
+    margin: 15px 0;
+    padding: 15px;
+    padding-right: 30px;
+    background-color: #a32aff6e;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.image {
+    width: 200px;
+    height: 200px
+}
+.image img{
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+}
+.information {
+    padding-left: 20px;
+}
+.information div{
+    margin-bottom: 10px;
+}
+.information div time {
+    display: flex;
+    align-items: center;
+}
+.information div address {
+    display: flex;
+    align-items: center;
+}
+.eventItemBtn {
+    display: flex;
+    justify-content: flex-end;
+}
+.eventItemBtn a {
+    display: flex;
+    align-items:center;
+}
