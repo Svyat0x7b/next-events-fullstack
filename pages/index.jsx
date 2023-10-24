@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import EventList from '@/components/events/EventList';
-import classes from '@/styles/home.module.css';
 
 const HomePage = () => {
     const [featuredEvents, setFeaturedEvents] = useState([]);
@@ -14,7 +13,14 @@ const HomePage = () => {
         fetchFeaturedEvents();
     }, []);
     return (
-        <div className={classes.home}>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                margin: '0px 40px',
+                borderRadius: '15px',
+            }}>
             <h1 style={{ margin: '15px 0' }}>Featured Events</h1>
             <EventList events={featuredEvents} />
         </div>
