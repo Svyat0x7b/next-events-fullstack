@@ -6,7 +6,7 @@ export default function handler(req, res) {
 
     if (events) {
         res.status(200).json(events);
+    } else {
+        res.status(404).json({ message: 'Not Found', status: 404 });
     }
-
-    res.status(404).json({ message: 'Not Found', status: 404 });
 }
