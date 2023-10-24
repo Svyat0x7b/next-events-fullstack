@@ -1,4 +1,4 @@
-import { DUMMY_EVENTS, getEventById } from '@/pages/data';
+import {getEventById } from '@/data';
 
 export default function handler(req, res) {
     const { id } = req.query;

@@ -1,4 +1,4 @@
-import { getFilteredEvents } from '@/pages/data';
+import { getFilteredEvents } from '@/data';
 
 export default function handler(req, res) {
     const { filter } = req.query;

@@ -1,6 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { DUMMY_EVENTS } from '@/pages/data';
+import { getAllEvents } from '@/data';
 
 export default function handler(req, res) {
-    res.status(200).json(DUMMY_EVENTS);
+    const events = getAllEvents();
+
+    if (events) {
+        res.status(200).json(events);
+    }
+
+    res.status(404).json({ message: 'Not Found', status: 404 });
 }
