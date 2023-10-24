@@ -16,8 +16,7 @@ const EventsPage = () => {
 
     useEffect(() => {
         const fetchAllEvents = async () => {
-            const endpoint = '/api/events';
-            await fetch(endpoint)
+            await fetch('/api/events')
                 .then((res) => {
                     if (!res.ok) {
                         throw new Error('Response is not ok!');
