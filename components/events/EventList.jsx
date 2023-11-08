@@ -1,9 +1,13 @@
 import EventItem from './EventItem';
-
+import ErrorMessage from '../ui/ErrorMessage';
 const EventList = ({ events }) => {
+    if (!events || !Array.isArray(events) || events.length === 0) {
+        return <ErrorMessage>There are no such events!</ErrorMessage>;
+    }
+
     return (
         <ul>
-            {events.map((event) => (
+            {events?.map((event) => (
                 <EventItem
                     title={event.title}
                     id={event.id}

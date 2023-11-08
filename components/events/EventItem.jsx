@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Button from '../ui/Button';
 import AddressIcon from '../icons/AddressIcon';
 import DateIcon from '../icons/DateIcon';
@@ -11,11 +12,10 @@ const EventItem = (props) => {
         year: 'numeric',
     });
     const formattedAddress = location.replace(',', '\n');
-    console.log(formattedAddress);
     return (
         <li className={classes.listItem} key={id}>
             <div className={classes.image}>
-                <img src={img} />
+                <img src={`/${img}`} />
             </div>
             <div className={classes.information}>
                 <div>

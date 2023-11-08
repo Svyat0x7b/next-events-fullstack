@@ -1,17 +1,7 @@
 import { useState, useEffect } from 'react';
 import EventList from '@/components/events/EventList';
 
-const HomePage = () => {
-    const [featuredEvents, setFeaturedEvents] = useState([]);
-    useEffect(() => {
-        const fetchFeaturedEvents = async () => {
-            await fetch('/api/featuredEvents')
-                .then((res) => res.json())
-                .then((data) => setFeaturedEvents(data))
-                .catch((err) => console.log(err));
-        };
-        fetchFeaturedEvents();
-    }, []);
+const HomePage = (props) => {
     return (
         <div
             style={{
@@ -22,9 +12,22 @@ const HomePage = () => {
                 borderRadius: '15px',
             }}>
             <h1 style={{ margin: '15px 0' }}>Featured Events</h1>
-            <EventList events={featuredEvents} />
+            <EventList events={props.featuredEvents} />
         </div>
     );
 };
 
 export default HomePage;
+
+export async function getStaticProps() {
+    const res = await fetch('http://localhost:3000/api/featuredEvents');
+
+    const data = await res.json();
+
+    return {
+        props: {
+            featuredEvents: data,
+        },
+        revalidate: 1800,
+    };
+}
