@@ -1,5 +1,7 @@
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import EventList from '@/components/events/EventList';
+import NewsRegister from '../components/input/NewsRegister';
 
 const HomePage = (props) => {
     return (
@@ -11,7 +13,12 @@ const HomePage = (props) => {
                 margin: '0px 40px',
                 borderRadius: '15px',
             }}>
+            <Head>
+                <title>Events App</title>
+                <meta name="description" contents="Find a lot of great events!" />
+            </Head>
             <h1 style={{ margin: '15px 0' }}>Featured Events</h1>
+            <NewsRegister />
             <EventList events={props.featuredEvents} />
         </div>
     );

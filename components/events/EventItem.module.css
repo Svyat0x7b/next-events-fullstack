@@ -1,7 +1,6 @@
 .listItem {
     display: flex;
     margin: 15px 0;
-    padding: 15px;
     padding-right: 30px;
     background-color: #a32aff6e;
     border-radius: 15px;
@@ -17,6 +16,7 @@
     object-fit:cover;
 }
 .information {
+    padding: 15px;
     padding-left: 20px;
 }
 .information div{
@@ -38,3 +38,29 @@
     display: flex;
     align-items:center;
 }
+
+@media (max-width: 610px) {
+    .listItem {
+      flex-direction: column;
+    }
+  
+    .image img {
+      width: 290%;
+      height: 14rem;
+    }
+  
+    .information {
+      width: 100%;
+      padding: 15px;
+      text-align: center;
+    }
+  
+    .information h2 {
+      margin: 1rem 0;
+    }
+  
+    .eventItemBtn {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }

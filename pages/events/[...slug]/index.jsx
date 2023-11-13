@@ -1,3 +1,4 @@
+import Head from 'next/link';
 import useSWR from 'swr';
 import EventList from '@/components/events/EventList';
 import ErrorMessage from '@/components/ui/ErrorMessage';
@@ -6,57 +7,60 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
 const FilteredEventsPage = () => {
-    const router = useRouter();
-    const [filterData, setFilterData] = useState(router.query.slug);
     const [filteredEvents, setFilteredEvents] = useState([]);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState({ is: false });
+
+    const router = useRouter();
+
+    const filterData = router.query.slug;
 
     useEffect(() => {
-        setFilterData(router.query.slug);
-    }, [router.query.slug]);
-
-    useEffect(() => {
-        if (!filterData || filterData.length !== 2) {
+        if (!filterData) {
             return;
         }
-
         const filteredYear = filterData[0];
         const filteredMonth = filterData[1];
-
-        fetchFilteredEvents(filteredYear, filteredMonth);
-    }, [filterData]);
-
-    const fetchFilteredEvents = async (year, month) => {
-        try {
-            const res = await fetch(`http://localhost:3000/api/filteredEvents/${year}-${month}`);
-            if (!res.ok) {
-                throw new Error(res.statusText);
-            }
-            const data = await res.json();
-            setFilteredEvents(data);
-        } catch (err) {
-            setError(err);
+        const numYear = +filteredYear;
+        const numMonth = +filteredMonth;
+        if (
+            isNaN(numYear) ||
+            isNaN(numMonth) ||
+            numYear > 2030 ||
+            numYear < 2019 ||
+            numMonth < 1 ||
+            numMonth > 12
+        ) {
+            setError({
+                is: true,
+                message: 'Invalid filter. Please adjust your values!',
+            });
+            return;
         }
-    };
-
-    if (!filterData) {
-        return <p style={{ marginTop: '200px', textAlign: 'center' }}>Loading...</p>;
-    }
+        const fetchFilteredEvents = async () => {
+            const endpoint = `/api/filteredEvents/${filteredYear}-${filteredMonth}`;
+            try {
+                const res = await fetch(endpoint);
+                if (!res.ok) {
+                    throw new Error(res.statusText);
+                }
+                const data = await res.json();
+                setFilteredEvents(data);
+            } catch (err) {
+                setError({
+                    is: true,
+                    message: err.message,
+                });
+            }
+        };
+        fetchFilteredEvents();
+    }, [filterData]);
 
     if (!filteredEvents || filteredEvents.length === 0) {
         return <ErrorMessage>There are no such events!</ErrorMessage>;
     }
 
-    if (error) {
-        return (
-            <ErrorMessage>
-                {error.message}
-                <Button link="/events">Go to all events</Button>
-            </ErrorMessage>
-        );
-    }
-
     const formatedDate = `${filterData[0]}-${String(filterData[1]).padStart(2, '0')}`;
+    console.log('here');
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -64,46 +68,6 @@ const FilteredEventsPage = () => {
             <EventList events={filteredEvents} />
         </div>
     );
-    // useEffect(() => {
-    //     if (!filterData) {
-    //         return;
-    //     }
-    //     const filteredYear = filterData[0];
-    //     const filteredMonth = filterData[1];
-    //     const numYear = +filteredYear;
-    //     const numMonth = +filteredMonth;
-    //     if (
-    //         isNaN(numYear) ||
-    //         isNaN(numMonth) ||
-    //         numYear > 2030 ||
-    //         numYear < 2019 ||
-    //         numMonth < 1 ||
-    //         numMonth > 12
-    //     ) {
-    //         setError({
-    //             is: true,
-    //             message: 'Invalid filter. Please adjust your values!',
-    //         });
-    //         return;
-    //     }
-    //     const fetchFilteredEvents = async () => {
-    //         const endpoint = `/api/filteredEvents/${filteredYear}-${filteredMonth}`;
-    //         try {
-    //             const res = await fetch(endpoint);
-    //             if (!res.ok) {
-    //                 throw new Error(res.statusText);
-    //             }
-    //             const data = await res.json();
-    //             setFilteredEvents(data);
-    //         } catch (err) {
-    //             setError({
-    //                 is: true,
-    //                 message: err.message,
-    //             });
-    //         }
-    //     };
-    //     fetchFilteredEvents();
-    // }, [filterData]);
 };
 
 // export async function getServerSideProps(context) {

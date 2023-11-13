@@ -15,7 +15,7 @@ const EventItem = (props) => {
     return (
         <li className={classes.listItem} key={id}>
             <div className={classes.image}>
-                <img src={`/${img}`} />
+                <Image src={`/${img}`} alt={title} width={250} height={160} />
             </div>
             <div className={classes.information}>
                 <div>

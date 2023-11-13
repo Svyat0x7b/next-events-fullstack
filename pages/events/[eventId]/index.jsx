@@ -1,6 +1,8 @@
+import Head from 'next/head';
 import EventSummary from '@/components/eventDetail/eventSummary';
 import EventLogistics from '@/components/eventDetail/eventLogistics';
 import EventContent from '@/components/eventDetail/eventContent';
+import Comments from '@/components/input/Comments';
 // import NotFound from '@/pages/404';
 // import { useState, useEffect, Fragment } from 'react';
 // import { useRouter } from 'next/router';
@@ -34,6 +36,10 @@ const EventDetailPage = (props) => {
 
     return (
         <>
+            <Head>
+                <title>{event.title}</title>
+                <meta name="description" contents={event.description} />
+            </Head>
             <EventSummary title={event.title} />
             <EventLogistics
                 date={event.date}
@@ -44,6 +50,7 @@ const EventDetailPage = (props) => {
             <EventContent>
                 <p>{event.description}</p>
             </EventContent>
+            <Comments eventId={event.id} />
         </>
     );
 };
