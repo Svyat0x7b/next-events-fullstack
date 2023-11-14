@@ -1,21 +1,20 @@
 import classes from './CommentsList.module.css';
 
-const CommentsList = () => {
+const CommentsList = ({ comments }) => {
+    if (!comments || comments.length === 0) {
+        return <p>There is no comments!</p>;
+    }
+
     return (
         <ul className={classes.comments}>
-            {/* Render list of comments - fetched from API */}
-            <li>
-                <p>The event is amazing!</p>
-                <div>
-                    By <address>Nick</address>
-                </div>
-            </li>
-            <li>
-                <p>That`s pretty good!</p>
-                <div>
-                    By <address>Max</address>
-                </div>
-            </li>
+            {comments.map((item) => (
+                <li key={item._id}>
+                    <p>{item.comment}</p>
+                    <div>
+                        By <address>{item.username}</address>
+                    </div>
+                </li>
+            ))}
         </ul>
     );
 };

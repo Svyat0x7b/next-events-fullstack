@@ -28,15 +28,21 @@ const NewComment = (props) => {
             return;
         }
 
+        setIsInvalid(false);
+
         props.onAddComment({
             email: enteredEmail,
             name: enteredName,
             comment: enteredComment,
         });
+
+        emailRef.current.value = '';
+        nameRef.current.value = '';
+        commentRef.current.value = '';
     };
 
     return (
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={sendCommandHandler}>
             <div className={classes.row}>
                 <div className={classes.control}>
                     <label htmlFor="email">Your email</label>
