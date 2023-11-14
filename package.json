@@ -14,8 +14,5 @@
     "react": "^18",
     "react-dom": "^18",
     "swr": "^2.2.4"
-  },
-  "devDependencies": {
-    "dotenv": "^16.3.1"
   }
 }

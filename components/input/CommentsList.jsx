@@ -1,7 +1,11 @@
 import classes from './CommentsList.module.css';
 
 const CommentsList = ({ comments }) => {
-    if (!comments || comments.length === 0) {
+    if (!comments) {
+        return <p>Loading...</p>;
+    }
+
+    if (comments.length === 0) {
         return <p>There is no comments!</p>;
     }
 
