@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
 import EventList from '@/components/events/EventList';
 import NewsRegister from '../components/input/NewsRegister';
 

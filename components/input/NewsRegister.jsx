@@ -1,13 +1,21 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
+import NotificationContext from '@/store/notificationContext';
 import classes from './NewsRegister.module.css';
 
 const NewsRegister = () => {
-    const [isSignedUp, setIsSignedUp] = useState(false);
     const emailRef = useRef();
+    const notificationCtx = useContext(NotificationContext);
+
     function registrationHandler(event) {
         event.preventDefault();
 
         const enteredEmail = emailRef.current.value;
+
+        notificationCtx.showNotification({
+            title: 'Signing Up...',
+            message: 'Registering for a newsletter',
+            status: 'pending',
+        });
 
         fetch('/api/newsletter', {
             method: 'POST',
@@ -17,16 +25,35 @@ const NewsRegister = () => {
             },
         })
             .then((res) => {
-                if (res.status == 422) {
-                    //setError
-                    console.log('422');
+                if (res.ok) {
+                    return res.json();
                 }
-                if (res.status == 201) {
-                    setIsSignedUp(true);
-                }
-                return res.json();
+                res.json()
+                    .then((data) => {
+                        throw new Error(data.message || 'Something went wrong!');
+                    })
+                    .catch((err) =>
+                        notificationCtx.showNotification({
+                            title: 'Error',
+                            message: err.message || 'Something went wrong!',
+                            status: 'error',
+                        }),
+                    );
             })
-            .then((data) => console.log(data));
+            .then((data) =>
+                notificationCtx.showNotification({
+                    title: 'Success!',
+                    message: 'Registered for a newsletter',
+                    status: 'success',
+                }),
+            )
+            .catch((err) =>
+                notificationCtx.showNotification({
+                    title: 'Error',
+                    message: err.message || 'Something went wrong!',
+                    status: 'error',
+                }),
+            );
 
         emailRef.current.value = '';
     }
@@ -45,7 +72,6 @@ const NewsRegister = () => {
                     <button>Register</button>
                 </div>
             </form>
-            {isSignedUp && <p>You are signed up successfully!</p>}
         </section>
     );
 };
